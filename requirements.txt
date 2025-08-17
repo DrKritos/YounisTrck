@@ -1,0 +1,8 @@
+nmap
+whois
+paramiko
+requests 
+beautifulsoup4
+cryptography
+openai
+ipaddress
