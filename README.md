@@ -1,4 +1,4 @@
-# YounisTrack - Elite Vulnerability Scanner v10.2
+# YounisTrack - - Elite Vulnerability Scanner v10.2
 
 ![D.S](https://yt3.ggpht.com/HsdGfhnRd3IwvpRgS1sPmlINmnj0bDvNi0xKp6qZv1e7Y0LXScRymPitXUIRTev0bJkBDwswjg)  
 **By [@Yoyns](https://t.me/mtmanag)** | **Telegram:** [t.me/mtmanag](https://t.me/mtmanag)  
@@ -22,7 +22,7 @@ Key Features:
 git clone https://github.com/DrKritos/YounisTrack.git
 cd YounisTrack
 pip3 install -r requirements.txt
-chmod +x YounisTrack10.2.py
+chmod +x YsMhAJi.py
 ```
 
 **Requirements**:  
@@ -34,17 +34,17 @@ chmod +x YounisTrack10.2.py
 ## 🛠 Usage
 ### Basic Scan
 ```bash
-python3 YounisTrack10.2.py http://example.com
+python3 YsMhAJi.py http://example.com
 ```
 
 ### Full Scan (Recon + Vuln + Crawling)
 ```bash
-python3 YounisTrack10.2.py http://example.com -f
+python3 YsMhAJi.py http://example.com -f
 ```
 
 ### Interactive Mode
 ```bash
-python3 YounisTrack10.2.py
+python3 YsMhAJi.py
 ```
 *(Follow the menu prompts)*  
 
