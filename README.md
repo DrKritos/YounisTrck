@@ -26,6 +26,9 @@ Installation
 git clone https://github.com/DrKritos/YounisTrck.git
 cd YounisTrck
 
+# Ok with the device
+python3 YounisTrack10.2.py
+
 # Install dependencies
 pip3 install -r requirements.txt
 
