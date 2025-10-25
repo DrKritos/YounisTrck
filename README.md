@@ -281,7 +281,7 @@ Vulnerability Report Example
 ```
 === Vulnerability Scan Report ===
 Target: http://example.com
-Scan Time: 2024-01-15 10:30:45
+Scan Time: 2025-10-25 11:30:45MP
 Scanner: YounisTrck v10.4
 
 [CRITICAL] SQL Injection Detected
@@ -460,6 +460,6 @@ https://api.star-history.com/svg?repos=DrKritos/YounisTrck&type=Date
 
 ---
 
-Last Updated: January 2024 | Version: 10.4 | Developer: Younis Mohammed Al Jilani
+Last Updated: January 2025 | Version: 10.4 | Developer: Younis Mohammed Al Jilani
 
 <!-- SEO Keywords: vulnerability scanner, penetration testing, cybersecurity, web application security, bug bounty, SQL injection, XSS, LFI, security assessment, ethical hacking, penetration testing tools, vulnerability assessment, web security, network security, API security, cloud security -->
