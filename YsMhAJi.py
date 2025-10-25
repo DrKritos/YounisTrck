@@ -955,7 +955,7 @@ def save_vulnerabilities(url):
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         username = getpass.getuser()
-        filename = f"/sdcard/exploits/by@mtmanag-found-scan-{timestamp}_user-{username}_target-{domain}.txt"
+        filename = f"YounisTrck-found-scan-{timestamp}_user-{username}_target-{domain}.txt"
         
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         
@@ -1067,13 +1067,13 @@ def save_vulnerabilities(url):
             f.write("\n=== FULL SCAN LOG ===\n")
             
             
-            log_filename = f"/sdcard/exploits/by@mtmanag-found-scan-{timestamp}_user-{username}_target-{domain}_FULL_LOG.txt"
+            log_filename = f"YounisTrck-found-scan-{timestamp}_user-{username}_target-{domain}_FULL_LOG.txt"
             
             try:
                 
                 f.write(f"Scan completed at: {datetime.now()}\n")
                 f.write(f"Target: {url}\n")
-                f.write(f"Scanner: YounisTrack v10.4\n")
+                f.write(f"Scanner: YounisTrck v10.4\n")
                 f.write(f"User: {username}\n")
                 f.write("="*50 + "\n")
                 
@@ -1088,7 +1088,7 @@ def save_vulnerabilities(url):
         
         try:
             with open(log_filename, 'w', encoding='utf-8') as log_file:
-                log_file.write(f"=== FULL SCAN LOG - YounisTrack v10.4 ===\n")
+                log_file.write(f"=== FULL SCAN LOG - YounisTrck v10.4 ===\n")
                 log_file.write(f"Target: {url}\n")
                 log_file.write(f"Scan Time: {datetime.now()}\n")
                 log_file.write(f"User: {username}\n")
@@ -1334,7 +1334,7 @@ def nmap_scan(url):
             return
 
         scanner = nmap.PortScanner()
-        nmap_args = f'--unprivileged -T4 -F --open -sV --script=default,vuln,banner,http-enum --script-args=unsafe=true -oN /sdcard/exploits/by@mtmanag-found-scan-{timestamp}_user-{username}_target-nmap-{domain}.txt'
+        nmap_args = f'--unprivileged -T4 -F --open -sV --script=default,vuln,banner,http-enum --script-args=unsafe=true -oN YounisTrck-found-scan-{timestamp}_user-{username}_target-nmap-{domain}.txt'
         
         print_status(f"Running NMAP with arguments: {nmap_args} on {target_ip}")
         scanner.scan(target_ip, arguments=nmap_args)
@@ -2904,7 +2904,7 @@ def main():
             
         print_success("\nScan process finished.")
     else:
-        #* By younis foynstrck*
+        #* By younis • younistrck*
         print_banner()
         target_url = input("Enter target URL (e.g., http://example.com): ").strip()
         if not target_url.startswith('http://') and not target_url.startswith('https://'):
