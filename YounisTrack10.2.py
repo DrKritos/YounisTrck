@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-YounisTrack Dependency Installer
-Automatically installs all required Python packages for YounisTrack v10.4
+YounisTrckDependency Installer
+Automatically installs all required Python packages for YounisTrck v10.4
 """
 
 import sys
@@ -15,7 +15,7 @@ from time import sleep
 def print_banner():
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
-    ║                   YounisTrack v10.4                          ║
+    ║                   YounisTrck v10.4                          ║
     ║               Dependency Installer Script                   ║
     ║                                                              ║
     ║         AI-Powered Vulnerability Scanner Setup              ║
@@ -288,7 +288,7 @@ def main():
     
     if not failed and not failed_imports:
         print("\n🎉 ALL DEPENDENCIES INSTALLED SUCCESSFULLY!")
-        print("\nYou can now run YounisTrack with:")
+        print("\nYou can now run YounisTrck with:")
         print("  python3 YsMhAJi.py")
     else:
         print("\n⚠️  Some dependencies failed to install.")
