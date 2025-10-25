@@ -1,10 +1,10 @@
-YounisTrack - Elite Vulnerability Scanner v10.4
+YounisTrck - Elite Vulnerability Scanner v10.4
 
 ![D.S](https://yt3.ggpht.com/HsdGfhnRd3IwvpRgS1sPmlINmnj0bDvNi0xKp6qZv1e7Y0LXScRymPitXUIRTev0bJkBDwswjg)  
 
 🔍 Overview
 
-YounisTrack is an advanced, AI-powered vulnerability scanner designed for comprehensive penetration testing and cybersecurity assessments. It combines reconnaissance, vulnerability detection, and threat intelligence in a single tool, supporting both automated and interactive scanning modes.
+YounisTrck is an advanced, AI-powered vulnerability scanner designed for comprehensive penetration testing and cybersecurity assessments. It combines reconnaissance, vulnerability detection, and threat intelligence in a single tool, supporting both automated and interactive scanning modes.
 
 Key Features:
 
@@ -23,8 +23,8 @@ Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/DrKritos/YounisTrack.git
-cd YounisTrack
+git clone https://github.com/DrKritos/YounisTrck.git
+cd YounisTrck
 
 # Install dependencies
 pip3 install -r requirements.txt
@@ -111,8 +111,8 @@ Full Installation
 
 ```bash
 # Clone repository
-git clone https://github.com/DrKritos/YounisTrack.git
-cd YounisTrack
+git clone https://github.com/DrKritos/YounisTrck.git
+cd YounisTrck
 
 # Install Python dependencies
 pip3 install requests beautifulsoup4 python-nmap python-whois paramiko cryptography dnspython ipaddress
@@ -245,7 +245,7 @@ Phase 5: Reporting & Analysis
 
 ---
 
-🎯 Why Choose YounisTrack?
+🎯 Why Choose YounisTrck?
 
 🚀 Performance
 
@@ -282,7 +282,7 @@ Vulnerability Report Example
 === Vulnerability Scan Report ===
 Target: http://example.com
 Scan Time: 2024-01-15 10:30:45
-Scanner: YounisTrack v10.4
+Scanner: YounisTrck v10.4
 
 [CRITICAL] SQL Injection Detected
 URL: http://example.com/login.php
@@ -423,7 +423,7 @@ Version History
 
 Official Channels
 
-· GitHub Repository: DrKritos/YounisTrack
+· GitHub Repository: DrKritos/YounisTrck
 · Telegram Support: @yoyns
 · YouTube Tutorials: @5d.S
 · Email Support: Via Telegram
@@ -452,7 +452,7 @@ Important: This tool is for educational and authorized security testing purposes
 
 If you find this tool useful, please give it a star on GitHub! ⭐
 
-https://api.star-history.com/svg?repos=DrKritos/YounisTrack&type=Date
+https://api.star-history.com/svg?repos=DrKritos/YounisTrck&type=Date
 
 ---
 
@@ -460,6 +460,6 @@ https://api.star-history.com/svg?repos=DrKritos/YounisTrack&type=Date
 
 ---
 
-Last Updated: January 2025 | Version: 10.4 | Developer: Younis Mohammed Al Jilani
+Last Updated: January 2024 | Version: 10.4 | Developer: Younis Mohammed Al Jilani
 
 <!-- SEO Keywords: vulnerability scanner, penetration testing, cybersecurity, web application security, bug bounty, SQL injection, XSS, LFI, security assessment, ethical hacking, penetration testing tools, vulnerability assessment, web security, network security, API security, cloud security -->
